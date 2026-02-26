@@ -97,3 +97,33 @@ function contactMessenger(productName){
   const messengerURL = "https://www.facebook.com/pagmayafoodfarm";
   window.open(messengerURL, '_blank');
 }
+/* =========================
+   APP-LIKE FEATURES (JS)
+========================= */
+
+// 🔌 Internet check → show offline screen
+function checkInternet() {
+  const offlineScreen = document.getElementById("offlineScreen");
+  if (!navigator.onLine) {
+    offlineScreen.style.display = "flex";
+  } else {
+    offlineScreen.style.display = "none";
+  }
+}
+
+// Run on load and when connection changes
+window.addEventListener("load", checkInternet);
+window.addEventListener("online", checkInternet);
+window.addEventListener("offline", checkInternet);
+
+// 🚫 Disable right-click / long press menu
+document.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+});
+
+// 🚫 Prevent image dragging
+document.addEventListener("dragstart", function(e) {
+  if (e.target.tagName === "IMG") {
+    e.preventDefault();
+  }
+});
