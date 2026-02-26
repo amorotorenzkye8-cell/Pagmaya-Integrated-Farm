@@ -9,7 +9,7 @@ menuDots.addEventListener('click', () => {
 // Product Data with Price
 const products = {
   livestock: [
-    {name: "Rode Island Chicken", stock: 40, sold: 12, price: 650, img: "rodeisland.jpg"}, // <-- added
+    {name: "Rhode Island Chicken", stock: 40, sold: 12, price: 650, img: "rodeisland.jpg"},
     {name: "Turkey", stock: 10, sold: 3, price: 800, img: "turkey.jpg"}, 
   ],
   poultry: [
@@ -17,7 +17,7 @@ const products = {
     {name: "White chicken eggs per tray (Medium size)", stock: 30, sold: 10, price: 160, img: "whiteegg.jpg"}
   ],
   fertilizers: [
-    {name: "Vermicast pero kilo (worms and mecrobes) ", stock: 100, sold: 25, price: 25, img: "vermicast.png"},
+    {name: "Vermicast per kilo (worms and microbes)", stock: 100, sold: 25, price: 25, img: "vermicast.png"},
     {name: "Cow manure per kilo", stock: 50, sold: 15, price: 30, img: "cowmanure.jpeg"}
   ],
   vegetables: [
@@ -45,7 +45,6 @@ let lastSelectedCategory = null;
 // Show products of selected category
 categoryElements.forEach(cat => {
   cat.addEventListener('click', () => {
-    // Save current scroll position
     categoriesScrollPos = categoriesSection.scrollLeft;
     lastSelectedCategory = cat;
 
@@ -78,32 +77,38 @@ backBtn.addEventListener('click', () => {
   categoriesSection.style.display = 'flex';
   backBtn.style.display = 'none';
 
-  // Restore scroll position
   if(lastSelectedCategory) {
-    // Scroll selected category to center
     const catRect = lastSelectedCategory.getBoundingClientRect();
     const containerRect = categoriesSection.getBoundingClientRect();
     const offset = (catRect.left + catRect.width / 2) - (containerRect.left + containerRect.width / 2);
     categoriesSection.scrollLeft += offset;
-
     lastSelectedCategory = null;
   } else {
     categoriesSection.scrollLeft = categoriesScrollPos;
   }
 });
 
-// Contact Messenger
+
+// ✅ CONTACT MESSENGER (UPDATED — NO ERROR IN APPS)
 function contactMessenger(productName){
-  const messengerURL = "https://www.facebook.com/pagmayafoodfarm";
-  window.open(messengerURL, '_blank');
+  const pageUsername = "pagmayafoodfarm"; // FB page username
+  const message = encodeURIComponent("Hello! I want to order: " + productName);
+  const messengerURL = `https://m.me/${pageUsername}?text=${message}`;
+
+  // Use location.href for app compatibility
+  window.location.href = messengerURL;
 }
+
+
 /* =========================
-   APP-LIKE FEATURES (JS)
+   APP-LIKE FEATURES
 ========================= */
 
 // 🔌 Internet check → show offline screen
 function checkInternet() {
   const offlineScreen = document.getElementById("offlineScreen");
+  if (!offlineScreen) return;
+
   if (!navigator.onLine) {
     offlineScreen.style.display = "flex";
   } else {
@@ -111,12 +116,11 @@ function checkInternet() {
   }
 }
 
-// Run on load and when connection changes
 window.addEventListener("load", checkInternet);
 window.addEventListener("online", checkInternet);
 window.addEventListener("offline", checkInternet);
 
-// 🚫 Disable right-click / long press menu
+// 🚫 Disable right-click / long press
 document.addEventListener("contextmenu", function(e) {
   e.preventDefault();
 });
